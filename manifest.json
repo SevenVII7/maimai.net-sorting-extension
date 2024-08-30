@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "7 Maimai sort tool",
-  "version": "2.0",
+  "version": "2.0.1",
   "description": "Maimai sort tool",
   "permissions": [],
   "background": {
