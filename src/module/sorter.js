@@ -25,12 +25,12 @@ export default function useSorter(){
   sortSelector.append(sorter.sortDescOption)
 
   // main function
-  function subSort(order) {
+  function sorting(elementList ,order) {
     console.log('start')
 
     let originIndex = 0
 
-    const items = songScoreDiv.toArray().map(function(element) {
+    const items = elementList.toArray().map(function(element) {
       const $element = $(element);
       const lvText = $element.find('.music_lv_block').text().trim();
 
@@ -56,27 +56,34 @@ export default function useSorter(){
       items.sort((a, b) => a.originIndex - b.originIndex)
     }
 
-    // 重新排列DOM
-    const footer = $('.wrapper.main_wrapper footer')
-    items.forEach(item => {
-      item.element.insertBefore(footer);
-    })
+    return items
   }
 
   // 监听 select 元素的变化事件
-  sortSelector.on('change', function() {
-    if ($(this).val() === 'asc') {
-      subSort('asc');  // 调用排序函数
-    } else if ($(this).val() === 'desc') {
-      subSort('desc');  // 调用排序函数
-    } else if ($(this).val() === 'origin') {
-      subSort('origin');
-    }
-  });
+  function startListenSorter(elementList){
+    sortSelector.on('change', function() {
+      let result
+      const val = $(this).val()
+      if (val === 'asc') {
+        result = sorting(elementList, 'asc')
+      } else if (val === 'desc') {
+        result = sorting(elementList, 'desc')
+      } else if (val === 'origin') {
+        result = sorting(elementList, 'origin')
+      }
+
+      // 重新排列DOM
+      const footer = $('.wrapper.main_wrapper footer')
+      result.forEach(item => {
+        item.element.insertBefore(footer)
+      })
+    })
+  }
 
   return {
     sortSelectorElement,
     sortSelector,
-    sorter
+    sorter,
+    startListenSorter
   }
 }

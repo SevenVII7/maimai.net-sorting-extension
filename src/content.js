@@ -22,9 +22,11 @@
 
 import $ from 'jquery'
 import useSorter from '@/module/sorter'
-import { newFilterElement, newFilterOption, filters } from '@/module/sorter'
+import { newFilterElement, filters } from '@/module/filter'
 
-const { sortSelectorElement } = useSorter()
+console.log($)
+
+const { sortSelectorElement, startListenSorter } = useSorter()
 
 const songScoreDiv = $('.w_450.m_15.p_3.f_0');
 const sortingElement = $('.town_area.p_10').find('table tbody')
@@ -104,6 +106,8 @@ if(songScoreDiv.length > 1){
       }
     });
   });
+
+  startListenSorter(songScoreDiv)
 }
 
 
