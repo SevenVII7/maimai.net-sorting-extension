@@ -22,10 +22,11 @@ export default function useSorter(){
     sortDescOption: newSortOption('desc', 'Sort by Level (Descending)')
   }
 
-  // 将新 option 添加到 select 元素中
-  sortSelector.append(sorter.sortOriginOption)
-  sortSelector.append(sorter.sortAscOption)
-  sortSelector.append(sorter.sortDescOption)
+  // 將新 option 添加到 select 元素中
+  Object.keys(sorter).forEach(key => {
+    const value = sorter[key];
+    sortSelector.append(value)
+  })
 
   // main function
   function sorting(elementList, order) {

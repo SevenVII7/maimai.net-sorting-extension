@@ -30,21 +30,21 @@ export default function(){
   // 插入自訂 filter
   Object.keys(filters).forEach(key => {
     const value = filters[key];
-    newFilterElement.append(value)
+    filterCheckboxElement.append(value)
   })
 
   function startListenFilter(elementList){
     // 全选功能
     filterCheckboxElement.find('input[name="selectAll"]').on('change', function() {
       const isChecked = $(this).prop('checked');
-      newFilterElement.find('input[data-custom-filter="1"]:not([name="selectAll"])').prop('checked', isChecked);
+      filterCheckboxElement.find('input[data-custom-filter="1"]:not([name="selectAll"])').prop('checked', isChecked);
       // 触发 change 事件以更新显示
-      newFilterElement.find('input[data-custom-filter="1"]:not([name="selectAll"])').first().trigger('change');
+      filterCheckboxElement.find('input[data-custom-filter="1"]:not([name="selectAll"])').first().trigger('change');
     });
   
     // 监听 filter 的变化
     filterCheckboxElement.on('change', 'input[type="checkbox"]', function() {
-      const selectedFilters = newFilterElement
+      const selectedFilters = filterCheckboxElement
         .find('input[type="checkbox"]:checked:not([name="selectAll"])')
         .map(() => ({
           name: $(this).attr('name'),
