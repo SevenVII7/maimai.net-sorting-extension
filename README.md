@@ -2,3 +2,5 @@
 歌曲成績 sorting 擴展, 用 LV 做副排序
 
 2.0.0 - LV 排序條件 升降冪
+
+[Chrome Web Store Page](https://chromewebstore.google.com/detail/7-maimai-sort-tool/akdheeldcpebjecpbkenllbijedmcbgp)
