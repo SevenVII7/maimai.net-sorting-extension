@@ -1,5 +1,8 @@
-### maimai.net 國際版網站用
-歌曲成績 sorting 擴展, 用 LV 做副排序
+# maimai.net-sorting-extension
+### maimai.net 國際版網站專用拓展
+Current feature
+- Rank Filter
+- LV Sorting
 
 2.0.0 - LV 排序條件 升降冪
 
