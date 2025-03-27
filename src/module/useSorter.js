@@ -1,3 +1,4 @@
+import $ from 'jquery'
 export default function useSorter(){
 
   // 创建新的 sorting option 元素
@@ -9,7 +10,9 @@ export default function useSorter(){
       </td>
     </tr>
   `)
-  const sortSelector = $(newSelectorElement).find('select')
+  const sortSelector = $(sortSelectorElement).find('select')
+
+  // option 生產器
   const newSortOption = (value, text) => $('<option>', { value, text })
 
   // 定義 sorter
@@ -25,9 +28,7 @@ export default function useSorter(){
   sortSelector.append(sorter.sortDescOption)
 
   // main function
-  function sorting(elementList ,order) {
-    console.log('start')
-
+  function sorting(elementList, order) {
     let originIndex = 0
 
     const items = elementList.toArray().map(function(element) {
@@ -72,8 +73,7 @@ export default function useSorter(){
         result = sorting(elementList, 'origin')
       }
 
-      // 重新排列DOM
-      const footer = $('.wrapper.main_wrapper footer')
+      const footer = $('.wrapper.main_wrapper footer') // 網站上的 footer, 以此為基準往前插入排序後的 DOM
       result.forEach(item => {
         item.element.insertBefore(footer)
       })
