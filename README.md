@@ -1,5 +1,7 @@
 # maimai.net-sorting-extension
 ### maimai.net 國際版網站專用拓展
+
+https://img.shields.io/badge/Release-V2.0.1-blue
 Current feature
 - Rank Filter
 - LV Sorting
