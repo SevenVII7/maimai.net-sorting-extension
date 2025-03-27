@@ -1,7 +1,7 @@
 # maimai.net-sorting-extension
 ### maimai.net 國際版網站專用拓展
 
-![Current Version](https://img.shields.io/badge/Release-V2.0.1-blue)
+![Current Version](https://img.shields.io/badge/Release-V2.0.1-blue) ![jQuery](https://img.shields.io/badge/jQuery-0769AD.svg?logo=jquery&logoColor=white)
 
 Current features
 - Rank Filter
