@@ -1,4 +1,4 @@
-/* 結構示例
+/* 成績 UI HTML 結構示例
 <div class="music_master_score_back pointer w_450 m_15 p_3 f_0" style="">
   <form action="https://maimaidx-eng.com/maimai-mobile/record/musicDetail/" method="get" accept-charset="utf-8">
     <img src="https://maimaidx-eng.com/maimai-mobile/img/diff_master.png" class="h_20 f_l">
