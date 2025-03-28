@@ -1,10 +1,33 @@
 import $ from 'jquery'
 
+export enum RankEnum {
+  SSSplus = 'SSS+',
+  SSS = 'SSS',
+  SSplus = 'SS+',
+  SS = 'SS',
+  Splus = 'S+',
+  S = 'S',
+  AAA = 'AAA',
+  AA = 'AA',
+  A = 'A'
+}
+export enum RankScoreEnum {
+  SSSplus = 100.5,
+  SSS = 100,
+  SSplus = 99.5,
+  SS = 99,
+  Splus = 98,
+  S = 97,
+  AAA = 95,
+  AA = 90,
+  A = 80
+}
+
 export default function(){
   // filter
   const filterCheckboxElement = $(`<div class="m_5 f_15"></div>`)
 
-  const newFilterCheckbox = (name, value, text, src) => $(`
+  const newFilterCheckbox = (name: string, value: string | number, text: string | null, src: string | null) => $(`
     <label class="p_r m_5" style="display: inline-block">
       <input type="checkbox" name="${name}" value="${value}" data-custom-filter="1" checked="">
       <span>
@@ -14,17 +37,17 @@ export default function(){
     </label>
   `)
 
-  const filters = {
+  const filters: Record<string, JQuery<HTMLElement>> = {
     selectAll: newFilterCheckbox('selectAll', 'all', 'Toggle All', null),
-    sssPlus: newFilterCheckbox('SSS+', 100.5, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sssp.png'),
-    sss: newFilterCheckbox('SSS', 100, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sss.png'),
-    ssPlus: newFilterCheckbox('SS+', 99.5, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_ssp.png'),
-    ss: newFilterCheckbox('SS', 99, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_ss.png'),
-    sPlus: newFilterCheckbox('S+', 98, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sp.png'),
-    s: newFilterCheckbox('S', 97, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_s.png'),
-    aaa: newFilterCheckbox('AAA', 90, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_aaa.png'),
-    aa: newFilterCheckbox('AA', 85, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_aa.png'),
-    a: newFilterCheckbox('A', 80, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_a.png'),
+    sssPlus: newFilterCheckbox(RankEnum.SSSplus, RankScoreEnum.SSSplus, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sssp.png'),
+    sss: newFilterCheckbox(RankEnum.SSS, RankScoreEnum.SSS, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sss.png'),
+    ssPlus: newFilterCheckbox(RankEnum.SSplus, RankScoreEnum.SSplus, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_ssp.png'),
+    ss: newFilterCheckbox(RankEnum.SS, RankScoreEnum.SS, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_ss.png'),
+    sPlus: newFilterCheckbox(RankEnum.Splus, RankScoreEnum.Splus, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sp.png'),
+    s: newFilterCheckbox(RankEnum.S, RankScoreEnum.S, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_s.png'),
+    aaa: newFilterCheckbox(RankEnum.AAA, RankScoreEnum.AAA, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_aaa.png'),
+    aa: newFilterCheckbox(RankEnum.AA, RankScoreEnum.AA, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_aa.png'),
+    a: newFilterCheckbox(RankEnum.A, RankScoreEnum.A, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_a.png'),
   }
 
   // 插入自訂 filter
@@ -33,7 +56,7 @@ export default function(){
     filterCheckboxElement.append(value)
   })
 
-  function startListenFilter(elementList){
+  function startListenFilter(elementList: JQuery<HTMLElement>){
     // 全选功能
     filterCheckboxElement.find('input[name="selectAll"]').on('change', function() {
       const isChecked = $(this).prop('checked');
@@ -41,7 +64,7 @@ export default function(){
       // 触发 change 事件以更新显示
       filterCheckboxElement.find('input[data-custom-filter="1"]:not([name="selectAll"])').first().trigger('change');
     });
-  
+
     // 监听 filter 的变化
     filterCheckboxElement.on('change', 'input[type="checkbox"]', function() {
       const selectedFilters = filterCheckboxElement
@@ -51,13 +74,13 @@ export default function(){
           value: parseFloat($(this).val())
         }))
         .get()
-  
+
       elementList.each(function() {
         const $element = $(this);
         const scoreText = $element.find('.music_score_block.w_112').text().trim();
         const score = parseFloat(scoreText);
         let shouldShow = false;
-  
+
         // 检查分数是否在选中的范围内
         selectedFilters.forEach(filter => {
           switch(filter.name) {
@@ -90,7 +113,7 @@ export default function(){
               break;
           }
         });
-  
+
         if (shouldShow) {
           $element.show();
         } else {
