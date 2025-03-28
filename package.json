@@ -6,14 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "keywords": [],
   "author": "Xinchii",
   "license": "ISC",
   "devDependencies": {
+    "@types/jquery": "^3.5.32",
     "prettier": "^3.5.3",
+    "typescript": "^5.8.2",
     "vite": "^6.2.3",
     "vite-plugin-eslint": "^1.8.1"
   },

@@ -13,8 +13,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        content: '@/content.js',
-        background: '@/background.js'
+        content: '@/content.ts',
+        background: '@/background.ts'
       },
       output: {
         entryFileNames: '[name].js',
