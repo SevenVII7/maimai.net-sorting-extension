@@ -1,27 +1,6 @@
 import $ from 'jquery'
+import { RankEnum, RankScoreEnum } from '@/types/types'
 
-export enum RankEnum {
-  SSSplus = 'SSS+',
-  SSS = 'SSS',
-  SSplus = 'SS+',
-  SS = 'SS',
-  Splus = 'S+',
-  S = 'S',
-  AAA = 'AAA',
-  AA = 'AA',
-  A = 'A'
-}
-export enum RankScoreEnum {
-  SSSplus = 100.5,
-  SSS = 100,
-  SSplus = 99.5,
-  SS = 99,
-  Splus = 98,
-  S = 97,
-  AAA = 95,
-  AA = 90,
-  A = 80
-}
 
 export default function(){
   // filter
