@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "7 Maimai sort tool",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Maimai sort tool",
   "permissions": [],
   "background": {
@@ -12,7 +12,8 @@
       "matches": [
         "https://maimaidx-eng.com/maimai-mobile/record/musicSort/*"
       ],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["content.css"]
     }
   ]
 }

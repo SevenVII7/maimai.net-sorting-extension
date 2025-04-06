@@ -5,12 +5,12 @@ export default function useSorter(){
 
   // 创建新的 sorting option 元素
   const sortSelectorElement = $(`
-    <tr>
-      <th class="col5 f_16">Sub sort</th>
-      <td class="t_c">
-        <select name="subsort" class="m_5 w_320"></select>
-      </td>
-    </tr>
+    <div>
+      <div style="margin-bottom: 5px;">Sub sort</div>
+      <div>
+        <select name="subsort" style="width: 100%"></select>
+      </div>
+    </div>
   `)
   const sortSelector = $(sortSelectorElement).find('select')
 
@@ -52,8 +52,6 @@ export default function useSorter(){
 
   return {
     sortSelectorElement,
-    sortSelector,
-    sorter,
     startListenSorter
   }
 }

@@ -1,14 +1,17 @@
 import $ from 'jquery'
-import { RankEnum, RankScoreEnum } from '@/types/types'
-
+import { ExtensionItem, RankEnum, RankScoreEnum } from '@/types/types'
 
 export default function(){
   // filter
-  const filterCheckboxElement = $(`<div class="m_5 f_15"></div>`)
+  const filterCheckboxElement = $(`
+    <div>
+      <div>Filter</div>
+    </div>
+  `)
 
   const newFilterCheckbox = (name: string, value: string | number, text: string | null, src: string | null) => $(`
     <label class="p_r m_5" style="display: inline-block">
-      <input type="checkbox" name="${name}" value="${value}" data-custom-filter="1" checked="">
+      <input type="checkbox" id="${`extension_rank_checkbox_${name}`}" name="extension_rank_checkbox" value="${value}" data-custom-filter="1">
       <span>
         ${ text ? text : '' }
         ${ src ? `<img src="${src}" style="height: 22px">` : ''}
@@ -17,16 +20,41 @@ export default function(){
   `)
 
   const filters: Record<string, JQuery<HTMLElement>> = {
-    selectAll: newFilterCheckbox('selectAll', 'all', 'Toggle All', null),
-    sssPlus: newFilterCheckbox(RankEnum.SSSplus, RankScoreEnum.SSSplus, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sssp.png'),
-    sss: newFilterCheckbox(RankEnum.SSS, RankScoreEnum.SSS, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sss.png'),
-    ssPlus: newFilterCheckbox(RankEnum.SSplus, RankScoreEnum.SSplus, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_ssp.png'),
-    ss: newFilterCheckbox(RankEnum.SS, RankScoreEnum.SS, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_ss.png'),
-    sPlus: newFilterCheckbox(RankEnum.Splus, RankScoreEnum.Splus, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sp.png'),
-    s: newFilterCheckbox(RankEnum.S, RankScoreEnum.S, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_s.png'),
-    aaa: newFilterCheckbox(RankEnum.AAA, RankScoreEnum.AAA, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_aaa.png'),
-    aa: newFilterCheckbox(RankEnum.AA, RankScoreEnum.AA, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_aa.png'),
-    a: newFilterCheckbox(RankEnum.A, RankScoreEnum.A, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_a.png'),
+    //selectAll: newFilterCheckbox('selectAll', 'all', 'Toggle All', null),
+    sssPlus: newFilterCheckbox(RankEnum.SSSplus, RankEnum.SSSplus, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sssp.png'),
+    sss: newFilterCheckbox(RankEnum.SSS, RankEnum.SSS, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sss.png'),
+    ssPlus: newFilterCheckbox(RankEnum.SSplus, RankEnum.SSplus, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_ssp.png'),
+    ss: newFilterCheckbox(RankEnum.SS, RankEnum.SS, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_ss.png'),
+    sPlus: newFilterCheckbox(RankEnum.Splus, RankEnum.Splus, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_sp.png'),
+    s: newFilterCheckbox(RankEnum.S, RankEnum.S, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_s.png'),
+    aaa: newFilterCheckbox(RankEnum.AAA, RankEnum.AAA, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_aaa.png'),
+    aa: newFilterCheckbox(RankEnum.AA, RankEnum.AA, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_aa.png'),
+    a: newFilterCheckbox(RankEnum.A, RankEnum.A, null, 'https://maimaidx-eng.com/maimai-mobile/img/music_icon_a.png'),
+  }
+
+  function rankScoreRange(rank: string | number){
+    switch (rank){
+      case RankEnum.SSSplus:
+        return (number: number) => { return number >= RankScoreEnum.SSSplus ? true : false }
+      case RankEnum.SSS:
+        return (number: number) => { return number < RankScoreEnum.SSSplus && number >= RankScoreEnum.SSS ? true : false }
+      case RankEnum.SSplus:
+        return (number: number) => { return number < RankScoreEnum.SSS && number >= RankScoreEnum.SSplus ? true : false }
+      case RankEnum.SS:
+        return (number: number) => { return number < RankScoreEnum.SSplus && number >= RankScoreEnum.SS ? true : false }
+      case RankEnum.Splus:
+        return (number: number) => { return number < RankScoreEnum.SS && number >= RankScoreEnum.Splus ? true : false }
+      case RankEnum.S:
+        return (number: number) => { return number < RankScoreEnum.Splus && number >= RankScoreEnum.S ? true : false }
+      case RankEnum.AAA:
+        return (number: number) => { return number < RankScoreEnum.S && number >= RankScoreEnum.AAA ? true : false }
+      case RankEnum.AA:
+        return (number: number) => { return number < RankScoreEnum.AAA && number >= RankScoreEnum.AA ? true : false }
+      case RankEnum.A:
+        return (number: number) => { return number < RankScoreEnum.AA && number >= RankScoreEnum.A ? true : false }
+      default:
+        return () => false
+    }
   }
 
   // 插入自訂 filter
@@ -35,70 +63,35 @@ export default function(){
     filterCheckboxElement.append(value)
   })
 
-  function startListenFilter(elementList: JQuery<HTMLElement>){
-    // 全选功能
-    filterCheckboxElement.find('input[name="selectAll"]').on('change', function() {
-      const isChecked = $(this).prop('checked');
-      filterCheckboxElement.find('input[data-custom-filter="1"]:not([name="selectAll"])').prop('checked', isChecked);
-      // 触发 change 事件以更新显示
-      filterCheckboxElement.find('input[data-custom-filter="1"]:not([name="selectAll"])').first().trigger('change');
-    });
+  function startListenFilter(list: ExtensionItem[]){
 
     // 监听 filter 的变化
-    filterCheckboxElement.on('change', 'input[type="checkbox"]', function() {
-      const selectedFilters = filterCheckboxElement
-        .find('input[type="checkbox"]:checked:not([name="selectAll"])')
-        .map(() => ({
-          name: $(this).attr('name'),
-          value: parseFloat($(this).val())
-        }))
+    filterCheckboxElement.on('change', 'input[name="extension_rank_checkbox"]', function() {
+      const selectedValues = $('input[name="extension_rank_checkbox"]:checked')
+        .map(function () {
+          return $(this).val()
+        })
         .get()
 
-      elementList.each(function() {
-        const $element = $(this);
-        const scoreText = $element.find('.music_score_block.w_112').text().trim();
-        const score = parseFloat(scoreText);
-        let shouldShow = false;
-
-        // 检查分数是否在选中的范围内
-        selectedFilters.forEach(filter => {
-          switch(filter.name) {
-            case 'SSS+':
-              if (score >= 100.5) shouldShow = true;
-              break;
-            case 'SSS':
-              if (score >= 100 && score < 100.5) shouldShow = true;
-              break;
-            case 'SS+':
-              if (score >= 99.5 && score < 100) shouldShow = true;
-              break;
-            case 'SS':
-              if (score >= 99 && score < 99.5) shouldShow = true;
-              break;
-            case 'S+':
-              if (score >= 98 && score < 99) shouldShow = true;
-              break;
-            case 'S':
-              if (score >= 97 && score < 98) shouldShow = true;
-              break;
-            case 'AAA':
-              if (score >= 90 && score < 97) shouldShow = true;
-              break;
-            case 'AA':
-              if (score >= 85 && score < 90) shouldShow = true;
-              break;
-            case 'A':
-              if (score >= 80 && score < 85) shouldShow = true;
-              break;
+      if (selectedValues.length) {
+        list.forEach((item) => {
+          let isHide = true
+  
+          selectedValues.forEach(val => {
+            if (rankScoreRange(val)(item.gamerScore)) { isHide = false }
+          })
+  
+          if (isHide) {
+            item.element.hide()
+          } else {
+            item.element.show()
           }
-        });
-
-        if (shouldShow) {
-          $element.show();
-        } else {
-          $element.hide();
-        }
-      });
+        })
+      } else {
+        list.forEach((item) => {
+          item.element.show()
+        })
+      }
     });
   }
 

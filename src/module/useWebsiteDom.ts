@@ -2,10 +2,33 @@ import $ from 'jquery'
 import type { ExtensionItem } from '@/types/types'
 
 export const songScoreDiv = $('.w_450.m_15.p_3.f_0');
-export const sortingElement = $('.town_area.p_10').find('table tbody')
-export const filterElement = $('.town_area.p_10').find('table ~ .m_5.f_15')
+// export const sortingElement = $('.town_area.p_10').find('table tbody')
+// export const filterElement = $('.town_area.p_10').find('table ~ .m_5.f_15')
+export const extensionBox = $(`
+  <div id="extension_box" class="extension_box_hide1">
+    <div id="extension_hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div id="extension_content"></div>
+  </div>
+`)
 
 export default function useWebsiteDom() {
+
+  function setup(appendElement: JQuery<HTMLElement>[]){
+    $('body').append(extensionBox)
+    extensionBox.find('#extension_hamburger').on('click', () => {
+      extensionBox.toggleClass('extension_box_hide')
+    })
+    appendElement.forEach((e, i) => {
+      if(i){
+        extensionBox.find('#extension_content').append('<br>')
+      }
+      extensionBox.find('#extension_content').append(e)
+    })
+  }
 
   const extensionItemList: ExtensionItem[] = songScoreDiv
     .toArray()
@@ -34,6 +57,7 @@ export default function useWebsiteDom() {
     })
 
   return {
+    setup,
     extensionItemList
   }
 }
