@@ -1,21 +1,21 @@
 import $ from 'jquery'
 import { ExtensionItem, SortOrderEnum } from '@/types/types'
 
+const newSortSelectorElement = (): JQuery<HTMLElement> => $(`
+  <div>
+    <div style="margin-bottom: 5px;">Sub sort</div>
+    <div>
+      <select name="subsort" style="width: 100%"></select>
+    </div>
+  </div>
+`)
+const newSortOption = (value: string, text: string): JQuery<HTMLElement> => $('<option>', { value, text })
+
 export default function useSorter(){
 
   // 创建新的 sorting option 元素
-  const sortSelectorElement = $(`
-    <div>
-      <div style="margin-bottom: 5px;">Sub sort</div>
-      <div>
-        <select name="subsort" style="width: 100%"></select>
-      </div>
-    </div>
-  `)
+  const sortSelectorElement = newSortSelectorElement()
   const sortSelector = $(sortSelectorElement).find('select')
-
-  // option 生產器
-  const newSortOption = (value: string, text: string): JQuery<HTMLElement> => $('<option>', { value, text })
 
   // 定義 sorter
   const sorter: Record<string, JQuery<HTMLElement>> = {

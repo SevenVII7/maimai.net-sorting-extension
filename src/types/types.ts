@@ -5,6 +5,9 @@ export type ExtensionItem = {
   gamerDxPoint: number
   originIndex: number
 }
+export type Rank = 'SSS+' | 'SSS' | 'SS+' | 'SS' | 'S+' | 'S' | 'AAA' | 'AA' | 'A'
+export type RankScore = 100.5 | 100 | 99.5 | 99 | 98 | 97 | 95 | 90 | 80
+
 export enum SortOrderEnum {
   ASC = 'asc',
   DESC = 'desc',

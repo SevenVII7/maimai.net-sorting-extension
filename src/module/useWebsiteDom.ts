@@ -1,9 +1,10 @@
 import $ from 'jquery'
 import type { ExtensionItem } from '@/types/types'
 
-export const songScoreDiv = $('.w_450.m_15.p_3.f_0');
+export const songScoreDiv = $('.w_450.m_15.p_3.f_0')
 // export const sortingElement = $('.town_area.p_10').find('table tbody')
 // export const filterElement = $('.town_area.p_10').find('table ~ .m_5.f_15')
+
 export const extensionBox = $(`
   <div id="extension_box" class="extension_box_hide1">
     <div id="extension_hamburger">
